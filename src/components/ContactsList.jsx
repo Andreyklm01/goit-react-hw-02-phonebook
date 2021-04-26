@@ -1,6 +1,6 @@
-const ContactsList = () => (
+const ContactsList = ({ contacts }) => (
   <ul>
-    <li>simple name</li>
+    <li>{contacts}</li>
   </ul>
 );
 
