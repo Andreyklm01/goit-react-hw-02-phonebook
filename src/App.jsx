@@ -2,24 +2,30 @@ import { Component } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 // uuidv4(); // ⇨ '9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d'
 // import ContactsList from './components/ContactsList';
+
 class App extends Component {
   state = {
     contacts: [],
     name: '',
+    number: '',
   };
 
-  inputId = uuidv4();
+  inputNameId = uuidv4();
+  inputNumberId = uuidv4();
   // переделать ИД
-  handleChangeName = ({ target }) => {
+
+  handleChange = ({ target }) => {
     const { name, value } = target;
     this.setState({
       [name]: value,
     });
   };
-  onAdd = name => {
+
+  onAdd = (name, number) => {
     const newContact = {
       id: uuidv4(),
       name,
+      number,
     };
     console.log(newContact);
     this.setState(prevState => {
@@ -31,42 +37,63 @@ class App extends Component {
 
   handleSubmit = event => {
     event.preventDefault();
-    const { name } = this.state;
+    const { name, number } = this.state;
 
-    if (!name) return;
-    this.onAdd(name);
+    if (!name || !number) return;
+    this.onAdd(name, number);
     this.resetInput();
   };
 
   resetInput = () => {
-    this.setState({ name: '' });
+    this.setState({
+      name: '',
+      number: '',
+    });
   };
 
-  renderName = () => {
+  renderContact = () => {
     const { contacts } = this.state;
-    return contacts.map(({ id, name }) => <li key={id}>{name}</li>);
+    return contacts.map(({ id, name, number }) => (
+      <li key={id}>
+        {name}:{number}
+      </li>
+    ));
   };
 
   render() {
-    const { contacts, name } = this.state;
-    const renderName = this.renderName();
+    const { name, number } = this.state;
+    const renderContact = this.renderContact();
 
     return (
       <>
         <div>
           <h1>Phonebook</h1>
           <h2>Name</h2>
-          <form onClick={this.handleSubmit}>
-            <label htmlFor={this.inputId}>
+          <form onSubmit={this.handleSubmit}>
+            <label htmlFor={this.inputNameId}>
+              Name
               <input
-                id={this.inputId}
+                id={this.inputNameId}
                 type="text"
                 name="name"
                 value={name}
                 pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
                 title="Имя может состоять только из букв, апострофа, тире и пробелов. Например Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan и т. п."
                 required
-                onChange={this.handleChangeName}
+                onChange={this.handleChange}
+              />
+            </label>
+            <label htmlFor={this.inputNumberId}>
+              Number
+              <input
+                id={this.inputNumberId}
+                type="tel"
+                name="number"
+                value={number}
+                pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+                title="Номер телефона должен состоять цифр и может содержать пробелы, тире, круглые скобки и может начинаться с +"
+                required
+                onChange={this.handleChange}
               />
             </label>
             <button type="submit">Add contact</button>
@@ -75,7 +102,7 @@ class App extends Component {
 
         <div>
           <h2>Contacts</h2>
-          <ul>{renderName}</ul>
+          <ul>{renderContact}</ul>
         </div>
       </>
     );
