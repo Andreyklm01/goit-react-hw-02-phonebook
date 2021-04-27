@@ -5,9 +5,15 @@ import { v4 as uuidv4 } from 'uuid';
 
 class App extends Component {
   state = {
-    contacts: [],
+    contacts: [
+      { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
+      { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
+      { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
+      { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
+    ],
     name: '',
     number: '',
+    filter: '',
   };
 
   inputNameId = uuidv4();
@@ -44,16 +50,34 @@ class App extends Component {
     this.resetInput();
   };
 
+  filterContacts = event => {
+    this.setState({ filter: event.target.value });
+    console.log(this.state.filter);
+  };
+
   resetInput = () => {
     this.setState({
       name: '',
       number: '',
+      filter: '',
     });
   };
 
-  renderContact = () => {
-    const { contacts } = this.state;
-    return contacts.map(({ id, name, number }) => (
+  // renderContact = value => {
+  //   const { contacts } = value;
+  //   return contacts.map(({ id, name, number }) => (
+  //     <li key={id}>
+  //       {name}:{number}
+  //     </li>
+  //   ));
+  // };
+
+  visibleContacts = () => {
+    const visible = this.state.contacts.filter(contact =>
+      contact.name.toLowerCase().includes(this.state.filter.toLowerCase()),
+    );
+    // this.renderContact(visible);
+    return visible.map(({ id, name, number }) => (
       <li key={id}>
         {name}:{number}
       </li>
@@ -61,8 +85,9 @@ class App extends Component {
   };
 
   render() {
+    const visibleContacts = this.visibleContacts();
+    console.log(visibleContacts);
     const { name, number } = this.state;
-    const renderContact = this.renderContact();
 
     return (
       <>
@@ -102,7 +127,8 @@ class App extends Component {
 
         <div>
           <h2>Contacts</h2>
-          <ul>{renderContact}</ul>
+          <input type="text" name="filter" onChange={this.filterContacts} />
+          <ul>{visibleContacts}</ul>
         </div>
       </>
     );
