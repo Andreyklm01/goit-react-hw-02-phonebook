@@ -1,0 +1,7 @@
+.list {
+  margin-left: 40px;
+  list-style: none;
+}
+.list li::before {
+  content: '🧙‍♂️';
+}
