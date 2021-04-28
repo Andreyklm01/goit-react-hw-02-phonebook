@@ -21,6 +21,22 @@ class App extends Component {
       name,
       number,
     };
+    const findContactsMatch = this.state.contacts.find(contact => {
+      return contact.name.toLowerCase() === name.toLowerCase();
+    });
+
+    findContactsMatch
+      ? alert(`${name.toUpperCase()} is allready in contacts`)
+      : this.setContacts(newContact);
+  };
+
+  deleteContact = id => {
+    this.setState(prevState => ({
+      contacts: prevState.contacts.filter(contact => contact.id !== id),
+    }));
+  };
+
+  setContacts = newContact => {
     this.setState(prevState => {
       return {
         contacts: [...prevState.contacts, newContact],
@@ -48,7 +64,10 @@ class App extends Component {
         <div>
           <h2>Contacts</h2>
           <Filter name={this.state.filter} onChange={this.filterContacts} />
-          <ContactsList сontacts={visibleContacts} />
+          <ContactsList
+            сontacts={visibleContacts}
+            onDelete={this.deleteContact}
+          />
         </div>
       </>
     );
