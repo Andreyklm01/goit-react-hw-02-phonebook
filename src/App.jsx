@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { v4 as uuidv4 } from 'uuid'; //
+import { v4 as uuidv4 } from 'uuid';
 import ContactForm from './components/ContactForm/ContactForm';
 import ContactsList from './components/ContactsList/ContactsList';
 import Filter from './components/Filter/Filter';
@@ -59,10 +59,10 @@ class App extends Component {
     const visibleContacts = this.visibleContacts();
     return (
       <>
-        <h1>Phonebook</h1>
+        <h1 className="main-title">Phonebook</h1>
         <ContactForm onSubmit={this.addContact} />
         <div>
-          <h2>Contacts</h2>
+          <h2 className="subtitle">Contacts</h2>
           <Filter name={this.state.filter} onChange={this.filterContacts} />
           <ContactsList
             сontacts={visibleContacts}

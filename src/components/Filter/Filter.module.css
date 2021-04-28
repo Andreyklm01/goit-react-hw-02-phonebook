@@ -1,0 +1,13 @@
+.container {
+  margin-left: 110px;
+}
+.text {
+  margin: 0 0 10px 0;
+  font-weight: 500;
+}
+
+.input {
+  border-radius: 3px;
+  border: 0.5px solid rgb(81, 82, 81);
+  background-color: rgb(231, 230, 230);
+}

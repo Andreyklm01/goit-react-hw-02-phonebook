@@ -40,8 +40,8 @@ class ContactForm extends Component {
     return (
       <div className={s.formContainer}>
         <form className={s.form} onSubmit={this.handleSubmit}>
+          <h3 className={s.title}>Name</h3>
           <label htmlFor={this.inputNameId}>
-            <h3 className={s.title}>Name</h3>
             <input
               className={s.input}
               id={this.inputNameId}
@@ -54,8 +54,8 @@ class ContactForm extends Component {
               onChange={this.handleChange}
             />
           </label>
+          <h3 className={s.title}>Number</h3>
           <label htmlFor={this.inputNumberId}>
-            <h3 className={s.title}>Number</h3>
             <input
               className={s.input}
               id={this.inputNumberId}
